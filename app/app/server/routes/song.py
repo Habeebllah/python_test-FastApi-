@@ -26,7 +26,7 @@ async def add_song_data(song: SongSchema = Body(...)):
 
 @router.get("/", response_description="Songs retrieved")
 async def get_songs():
-    songs = await retrieve_songs()
+    songs = await retrieve_song()
     if songs:
         return ResponseModel(songs, "Songs data retrieved successfully")
     return ResponseModel(songs, "Empty list returned")

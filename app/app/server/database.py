@@ -13,17 +13,16 @@ song_collection = database.get_collection("songs_collection")
 
 def song_helper(song) -> dict:
     return {
-        "id": str(song["_id"]),
-        "fullname": song["fullname"],
-        "email": song["email"],
-        "course_of_study": song["course_of_study"],
-        "year": song["year"],
-        "GPA": song["gpa"],
+        "song_id": (song["song_id"]),
+        "name": song["name"],
+        "duration": song["duration"],
+        "created_at": song["created_at"],
+
     }
 
 
 # Retrieve all songs present in the database
-async def retrieve_songs():
+async def retrieve_song():
     songs = []
     async for song in song_collection.find():
         songs.append(song_helper(song))
@@ -33,13 +32,13 @@ async def retrieve_songs():
 # Add a new song into to the database
 async def add_song(song_data: dict) -> dict:
     song = await song_collection.insert_one(song_data)
-    new_song = await song_collection.find_one({"_id": song.inserted_id})
+    new_song = await song_collection.find_one({"song_id": song.inserted_id})
     return song_helper(new_song)
 
 
 # Retrieve a song with a matching ID
 async def retrieve_song(id: str) -> dict:
-    song = await song_collection.find_one({"_id": ObjectId(id)})
+    song = await song_collection.find_one({"song_id": ObjectId(id)})
     if song:
         return song_helper(song)
 
@@ -49,10 +48,10 @@ async def update_song(id: str, data: dict):
     # Return false if an empty request body is sent.
     if len(data) < 1:
         return False
-    song = await song_collection.find_one({"_id": ObjectId(id)})
+    song = await song_collection.find_one({"song_id": ObjectId(id)})
     if song:
         updated_song = await song_collection.update_one(
-            {"_id": ObjectId(id)}, {"$set": data}
+            {"song_id": ObjectId(id)}, {"$set": data}
         )
         if updated_song:
             return True
@@ -61,7 +60,7 @@ async def update_song(id: str, data: dict):
 
 # Delete a song from the database
 async def delete_song(id: str):
-    song = await song_collection.find_one({"_id": ObjectId(id)})
+    song = await song_collection.find_one({"song_id": ObjectId(id)})
     if song:
-        await song_collection.delete_one({"_id": ObjectId(id)})
+        await song_collection.delete_one({"song_id": ObjectId(id)})
         return True

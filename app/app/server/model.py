@@ -30,16 +30,15 @@ class UpdateSongModel(BaseModel):
     duration: str = Field(...)
     created_at: datetime
 
- 
+
 
     class Config:
         schema_extra = {
             "example": {
-                "song_id": '1',
+                 "song_id": '1',
                 "name": "stand it up",
                 "duration": "2 mins",
                 "created_at": "02-04-2021",
-
             }
         }
 

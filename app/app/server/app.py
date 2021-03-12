@@ -9,4 +9,4 @@ app.include_router(SongRouter, tags=["Song"], prefix="/song")
 
 @app.get("/", tags=["Root"])
 async def read_root():
-    return {"message": "Welcome to this fantastic app!"}
+    return {"message": "Song Api using FastApi and MongoDB!"}
