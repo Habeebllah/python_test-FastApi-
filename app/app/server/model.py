@@ -1,39 +1,44 @@
 from typing import Optional
-
+from datetime import datetime
 from pydantic import BaseModel, EmailStr, Field
+from uuid import UUID
 
 
 class SongSchema(BaseModel):
-    id: int
+    song_id: UUID
     name: str = Field(...)
-    duration:  = Field(...)
-    created_at: str = Field(...)
+    duration: str = Field(...)
+    created_at: datetime
 
 
 
     class Config:
         schema_extra = {
             "example": {
-                "name": "John Doe",
-                "duration": "jdoe@x.edu.ng",
-                "created_at": "Water resources engineering",
+                "song_id": '1',
+                "name": "stand it up",
+                "duration": "2 mins",
+                "created_at": "02-04-2021",
 
             }
         }
 
 
 class UpdateSongModel(BaseModel):
-    name: Optional[str]
-    duration: Optional[EmailStr]
-    created_at: Optional[str]
+    song_id: UUID
+    name: str = Field(...)
+    duration: str = Field(...)
+    created_at: datetime
 
+ 
 
     class Config:
         schema_extra = {
             "example": {
-                "name": "John Doe",
-                "duration": "jdoe@x.edu.ng",
-                "created_at": "Water resources and environmental engineering",
+                "song_id": '1',
+                "name": "stand it up",
+                "duration": "2 mins",
+                "created_at": "02-04-2021",
 
             }
         }
